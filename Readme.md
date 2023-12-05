@@ -1,5 +1,7 @@
 This repository contains code to run the simulations described in our work to understand possible mechanisms underlying the distinctive organization of polycomb-bound chromatin at hox gene-complexes.
 
+[![DOI](https://zenodo.org/badge/555168393.svg)](https://zenodo.org/doi/10.5281/zenodo.10258160)
+
 Polycomb repression of Hox genes involves spatial feedback but not domain compaction or demixing
 
 Sedona Eve Murphy<sup>1,2</sup> and Alistair Nicol Boettiger<sup>1</sup>
