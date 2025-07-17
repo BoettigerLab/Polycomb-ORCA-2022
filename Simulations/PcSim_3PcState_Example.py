@@ -50,11 +50,9 @@ import ast
 #    The first step after the imports is to parse these values and create the save folder 
 
 topFolder = sys.argv[1] # 
-sticky_idx =  np.array(ast.literal_eval(sys.argv[2]))   # which value of adhesion to test
 sticky = 0.4 # Adhesive interaction between Pc-monomers. Values of ~.7 are sufficient in either the 1-state or 3-state model to create a collapsed globular 'droplet' structure.  
 saveFolder = topFolder + 'sim001' + '/'
-print(sticky_idx)
-print(sticky[sticky_idx])
+
 
 if not os.path.exists(saveFolder):
     os.mkdir(saveFolder)  # only creates folders 1 deep, won't create a full path
@@ -97,7 +95,7 @@ ctcfDir = np.zeros(nCTCF) # 0 is bidirectional, 1 is right 2 is left
 ctcfCapture = 0.99*np.ones(nCTCF) #  capture probability per block if capture < than this, capture  
 ctcfRelease =0.003*np.ones(nCTCF)  # % release probability per block. if capture < than this, release
 loadProb = np.ones([1,N])  # uniform loading probability
-loadProb = numpy.matlib.repmat(loadProb,1,M) # need to replicate and renormalize
+loadProb = numpy.matlib.repmat(loadProb,1,1) # need to replicate and renormalize
 loadProb = loadProb/np.sum(loadProb) 
 lefPosFile = saveFolder + "LEFPos.h5"
 nCTCF = np.shape(ctcfSites)[0]
@@ -118,7 +116,7 @@ ctcfLeftCapture = {}
 ctcfRightCapture = {}
 for i in range(num_chains): # loop over chains
     for t in range(len(ctcfSites)):
-        pos = i * N1 + ctcfSites[t] 
+        pos = i * N + ctcfSites[t] 
         if ctcfDir[t] == 0:
             ctcfLeftCapture[pos] = ctcfCapture[t]  # if random [0,1] is less than this, capture
             ctcfLeftRelease[pos] = ctcfRelease[t]  # if random [0,1] is less than this, release
@@ -286,7 +284,7 @@ for t in range(iters):
     reporter = HDF5Reporter(folder=newFolder, max_data_length=100)
     print('creating folder')
 
-    for p in range(M):
+    for p in range(1):
         polyDat = data[p*monomers:(p+1)*monomers,:]  # ['pos'][p*monomers:(p+1)*monomers,:]
         newColors = copy.copy(colorStates[t,p*monomers:(p+1)*monomers]) # note this is not a copy, just a reference. updating newColors immideately updates colorStates
         # moved frac bound down
